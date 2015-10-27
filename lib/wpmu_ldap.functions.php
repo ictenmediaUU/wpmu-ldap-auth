@@ -58,10 +58,10 @@ function wpmuLdapCreateWPUserFromLdap($opts) {
 	//This is for plugin events
 	do_action('wpmu_activate_user', $user_id, $newUserPassword, false);
 
-	$domain = strtolower( wp_specialchars( $newUserName ) );
+	$uname = strtolower( wp_specialchars( $newUserName ) );
 
     # WPMU doesnot accept non-alphanumeric characters
-    preg_replace("/[^a-z0-9 ]/", '', $domain);
+    $domain = preg_replace('/[^\da-z]/i', '', $uname);
 
 	if( constant( "VHOST" ) == 'yes' ) {
 		$newdomain = $domain . "." . $current_site->domain;
