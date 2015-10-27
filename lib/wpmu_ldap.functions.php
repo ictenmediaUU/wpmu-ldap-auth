@@ -65,7 +65,8 @@ function wpmuLdapCreateWPUserFromLdap($opts) {
 	}
 	else {
 		$newdomain = $current_site->domain;
-		$path = $base . $domain . '/';
+        # prefix path with a /
+		$path = '/' . $base . $domain . '/';
 	}
 
 	// is it configured to create WP blogs from LDAP accounts?
