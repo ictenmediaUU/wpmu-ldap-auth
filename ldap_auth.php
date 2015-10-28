@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: WPMU Ldap Auth
-Plugin URI: http://neu.edu.tr
+Plugin URI: https://github.com/sxnol/wpmu-ldap-auth
 Description: A plugin to override the core WordPress authentication method so as to use an LDAP server for authentication.  Currently only supported on MultiSite installations.
-Version: 4.0.3
+Version: 1.0.1
 Author: Senol Korkmaz
-Author URI: http://uhuru.in
+Author URI: http://neu.edu.tr
 License: LGPLv2.1 or later
 Network: true
 */
