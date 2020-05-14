@@ -84,7 +84,7 @@ function ldapAddUserResult($options) {
 function ldapAddUserOptions() {
 	global $blog_id, $current_user;
 
-	if ($_POST['addUser']) {
+	if (isset($_POST['addUser'])) {
 		// Process the post request
 		$user = $_POST['user'];
                 if ( empty($user['username']) && empty($user['email']) ) {
@@ -131,7 +131,7 @@ function ldapAddUserOptions() {
 			} else
 				ldapAddUserResult(array('updated' => 'false','action' => 'exists','username' => $username));
 		}
-	} elseif ($_POST['addUserBulk']) {
+	} elseif (isset($_POST['addUserBulk'])) {
 		// Check Access
 	        $ldapBulkAdd = get_site_option('ldapBulkAdd');
         	if (is_super_admin() || ($ldapBulkAdd && is_admin())) {
@@ -173,7 +173,7 @@ function ldapAddUserOptions() {
 		} else {
 			ldapAddUserResult(array('updated' => 'false','action' => 'auth'));
 		}
-	} elseif ($_POST['addLocalUser']) {
+	} elseif (isset($_POST['addLocalUser'])) {
                	check_admin_referer('add-local-user');
 		$ldapCreateLocalUser = get_site_option('ldapCreateLocalUser');
 		if ($ldapCreateLocalUser || is_super_admin())  {
@@ -284,11 +284,12 @@ function wpmuLdapAddGenRoleBox($id) {
 	global $wp_roles;
 	echo '<select name="user['.$id.']" id="'.$id.'">';
 	foreach($wp_roles->role_names as $role => $name) {
-		$name = translate_with_context($name);
+		$name = _x($name, 'wpmu ldap role name');
 		$selected = '';
-		if( $role == 'subscriber' )
+		if( $role == 'subscriber' ) {
 			$selected = 'selected="selected"';
-			echo "<option {$selected} value=\"{$role}\">{$name}</option>";
-               	}
+		}
+		echo '<option ' . $selected . ' value="' . $role . '">' . $name . '</option>';
+    }
         echo '</select>';
 }

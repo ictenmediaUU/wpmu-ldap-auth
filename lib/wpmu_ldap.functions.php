@@ -58,19 +58,14 @@ function wpmuLdapCreateWPUserFromLdap($opts) {
 	//This is for plugin events
 	do_action('wpmu_activate_user', $user_id, $newUserPassword, false);
 
-	$uname = strtolower( wp_specialchars( $newUserName ) );
-
-    # WPMU doesnot accept non-alphanumeric characters
-    $domain = preg_replace('/[^\da-z]/i', '', $uname);
-
+	$domain = strtolower( wp_specialchars( $newUserName ) );
 	if( constant( "VHOST" ) == 'yes' ) {
 		$newdomain = $domain . "." . $current_site->domain;
 		$path = $base;
 	}
 	else {
 		$newdomain = $current_site->domain;
-        # prefix path with a /
-		$path = '/' . $base . $domain . '/';
+		$path = $base . $domain . '/';
 	}
 
 	// is it configured to create WP blogs from LDAP accounts?
@@ -281,7 +276,15 @@ function wpmuLdapSearchUser($opts) {
  * If users already exists (Local or LDAP) access will be granted to the specified blog
  */
 function wpmuLdapAddUserToBlog($user_id,$blog_id,$new_role = 'subscriber') {
-        add_user_to_blog($blog_id, $user_id, $new_role);
+        $temp = add_user_to_blog($blog_id, $user_id, $new_role);
+        if($temp == TRUE)
+        {
+        	ECHO 'user added';
+        }
+        else
+        {
+        	print_r($temp);
+        } ;
 	return true;
 }
 
